@@ -24,19 +24,20 @@ def split_codons(dna: str) -> list[str] | None:
     If the length of the string is a multiple of tree, then this
     function splits the string into non-overlapping triplets.
 
-    >>> split_codons('aaacccgggtttt')
+    >>> split_codons('aaacccgggttt')
     ['aaa', 'ccc', 'ggg', 'ttt']
 
     If the string length is not a multiple of three, the function
     should return `None`. (There are better ways at reporting
     errors, but we will see those later).
 
-    >>> split_codons("acgt")
-    None
+    >>> split_codons("acgt") is None
+    True
 
     """
-    # FIXME: Implement the function
-    return []
+    if len(dna) % 3 != 0:
+        return None
+    return [dna[i:i+3] for i in range(0, len(dna), 3)]
 
 
 def translate_codons(codons: list[str]) -> list[str]:
@@ -56,12 +57,17 @@ def translate_codons(codons: list[str]) -> list[str]:
     i.e. not in the CODON_MAP when translated into upper case, the
     function should return `None`.
 
-    >>> translate_codons(["acg", "ac", "gca"])
-    None
+    >>> translate_codons(["acg", "ac", "gca"]) is None
+    True
 
     """
-    # FIXME: Implement the function
-    return []
+    aa = []
+    for codon in codons:
+        codon = codon.upper()
+        if codon not in CODON_MAP:
+            return None
+        aa.append(CODON_MAP[codon])
+    return aa
 
 
 def translate_dna(dna: str) -> str:
@@ -76,9 +82,16 @@ def translate_dna(dna: str) -> str:
     any of the triplets in it are not valid codons (when in uppercase), the function
     should return `None`.
 
-    >>> translate_dna('tgtgctg')
-    None
+    >>> translate_dna('tgtgctg') is None
+    True
 
     """
-    # FIXME: Implement the function
-    return ""
+    codons = split_codons(dna)
+    if codons is None:
+        return
+
+    aa = translate_codons(codons)
+    if aa is None:
+        return
+
+    return "".join(aa)
