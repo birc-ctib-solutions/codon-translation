@@ -87,12 +87,11 @@ if __name__ == '__main__':
             pass
         case 2:
             # one argument
-            print("Feature not implemented yet.", file=sys.stderr)
-            sys.exit(1)
+            infile = open(sys.argv[1])
         case 3:
             # two arguments
-            print("Feature not implemented yet.", file=sys.stderr)
-            sys.exit(1)
+            infile = open(sys.argv[1])
+            outfile = open(sys.argvp[2], "w")
         case _:
             # more than two arguments; that is an error
             print("Too many arguments.", file=sys.stderr)
